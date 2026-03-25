@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Simple Calculator</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+      font-family: 'Segoe UI', system-ui, sans-serif;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 24px;
+      padding: 40px 36px;
+      width: 420px;
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+    }
+
+    .card h1 {
+      text-align: center;
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 6px;
+      letter-spacing: -0.3px;
+    }
+
+    .card .subtitle {
+      text-align: center;
+      font-size: 0.82rem;
+      color: rgba(255,255,255,0.45);
+      margin-bottom: 32px;
+    }
+
+    /* ── Display ── */
+    .display {
+      background: rgba(0,0,0,0.35);
+      border-radius: 14px;
+      padding: 18px 20px;
+      margin-bottom: 28px;
+      min-height: 72px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .display .expression {
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.4);
+      min-height: 18px;
+      margin-bottom: 4px;
+      word-break: break-all;
+    }
+
+    .display .result {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #e2e8f0;
+      text-align: right;
+      word-break: break-all;
+      transition: color 0.2s;
+    }
+
+    .display .result.error { color: #fc8181; font-size: 1rem; }
+
+    /* ── Inputs ── */
+    .inputs {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-bottom: 22px;
+    }
+
+    .input-group label {
+      display: block;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: rgba(255,255,255,0.5);
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      margin-bottom: 6px;
+    }
+
+    .input-group input {
+      width: 100%;
+      padding: 12px 14px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 10px;
+      color: #fff;
+      font-size: 1.1rem;
+      font-weight: 600;
+      text-align: center;
+      outline: none;
+      transition: border-color 0.2s, background 0.2s;
+    }
+
+    .input-group input:focus {
+      border-color: #63b3ed;
+      background: rgba(99,179,237,0.1);
+    }
+
+    .input-group input::placeholder { color: rgba(255,255,255,0.25); }
+
+    /* ── Operation buttons ── */
+    .ops-label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: rgba(255,255,255,0.5);
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      margin-bottom: 12px;
+    }
+
+    .ops {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .op-btn {
+      padding: 16px 8px;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #fff;
+      transition: transform 0.1s, opacity 0.15s, box-shadow 0.15s;
+      position: relative;
+    }
+
+    .op-btn span.label {
+      display: block;
+      font-size: 0.65rem;
+      font-weight: 500;
+      opacity: 0.75;
+      margin-top: 4px;
+      letter-spacing: 0.3px;
+    }
+
+    .op-btn:hover  { opacity: 0.9; transform: translateY(-2px); box-shadow: 0 6px 16px rgba(0,0,0,0.3); }
+    .op-btn:active { transform: translateY(0); }
+
+    .op-btn.add      { background: linear-gradient(135deg, #48bb78, #38a169); }
+    .op-btn.subtract { background: linear-gradient(135deg, #f6ad55, #ed8936); }
+    .op-btn.multiply { background: linear-gradient(135deg, #63b3ed, #4299e1); }
+    .op-btn.divide   { background: linear-gradient(135deg, #fc8181, #e53e3e); }
+
+    /* ── Clear button ── */
+    .clear-btn {
+      width: 100%;
+      padding: 13px;
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 12px;
+      color: rgba(255,255,255,0.6);
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      letter-spacing: 0.5px;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .clear-btn:hover { background: rgba(255,255,255,0.13); color: #fff; }
+
+    /* ── History ── */
+    .history-wrap {
+      margin-top: 24px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      padding-top: 20px;
+    }
+
+    .history-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .history-header span {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: rgba(255,255,255,0.45);
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+    }
+
+    .history-header button {
+      background: none;
+      border: none;
+      color: rgba(255,255,255,0.35);
+      font-size: 0.75rem;
+      cursor: pointer;
+    }
+
+    .history-header button:hover { color: #fc8181; }
+
+    .history-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      max-height: 160px;
+      overflow-y: auto;
+    }
+
+    .history-list::-webkit-scrollbar { width: 4px; }
+    .history-list::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 4px; }
+
+    .history-list li {
+      background: rgba(255,255,255,0.04);
+      border-radius: 8px;
+      padding: 8px 12px;
+      font-size: 0.82rem;
+      color: rgba(255,255,255,0.55);
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .history-list li .h-result { color: #e2e8f0; font-weight: 600; }
+
+    /* ── Loading spinner inside button ── */
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .spinner {
+      display: inline-block;
+      width: 16px; height: 16px;
+      border: 2px solid rgba(255,255,255,0.4);
+      border-top-color: #fff;
+      border-radius: 50%;
+      animation: spin 0.6s linear infinite;
+      vertical-align: middle;
+    }
+  </style>
+</head>
+<body>
+<div class="card">
+  <h1>Calculator</h1>
+  <p class="subtitle">Powered by REST API</p>
+
+  <!-- Display -->
+  <div class="display">
+    <div class="expression" id="expression"></div>
+    <div class="result" id="result">0</div>
+  </div>
+
+  <!-- Inputs -->
+  <div class="inputs">
+    <div class="input-group">
+      <label>First Number (A)</label>
+      <input type="number" id="numA" placeholder="0" />
+    </div>
+    <div class="input-group">
+      <label>Second Number (B)</label>
+      <input type="number" id="numB" placeholder="0" />
+    </div>
+  </div>
+
+  <!-- Operation buttons -->
+  <div class="ops-label">Select Operation</div>
+  <div class="ops">
+    <button class="op-btn add"      onclick="calculate('add')">
+      ＋<span class="label">Add</span>
+    </button>
+    <button class="op-btn subtract" onclick="calculate('subtract')">
+      －<span class="label">Subtract</span>
+    </button>
+    <button class="op-btn multiply" onclick="calculate('multiply')">
+      ×<span class="label">Multiply</span>
+    </button>
+    <button class="op-btn divide"   onclick="calculate('divide')">
+      ÷<span class="label">Divide</span>
+    </button>
+  </div>
+
+  <button class="clear-btn" onclick="clearAll()">Clear</button>
+
+  <!-- History -->
+  <div class="history-wrap">
+    <div class="history-header">
+      <span>History</span>
+      <button onclick="clearHistory()">Clear history</button>
+    </div>
+    <ul class="history-list" id="history"></ul>
+  </div>
+</div>
+
+<script>
+  const SYMBOLS = { add: '+', subtract: '−', multiply: '×', divide: '÷' };
+  const ENDPOINTS = { add: '/add', subtract: '/subtract', multiply: '/multiply', divide: '/divide' };
+  let history = [];
+
+  async function calculate(operation) {
+    const aVal = document.getElementById('numA').value.trim();
+    const bVal = document.getElementById('numB').value.trim();
+
+    if (aVal === '' || bVal === '') {
+      showError('Please enter both numbers.');
+      return;
+    }
+
+    const btn = document.querySelector(`.op-btn.${operation}`);
+    const originalHTML = btn.innerHTML;
+    btn.innerHTML = '<span class="spinner"></span>';
+    btn.disabled = true;
+
+    try {
+      const res = await fetch(ENDPOINTS[operation], {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ a: parseFloat(aVal), b: parseFloat(bVal) })
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        showError(data.error || 'Something went wrong.');
+        return;
+      }
+
+      const expr = `${formatNum(data.a)} ${SYMBOLS[operation]} ${formatNum(data.b)}`;
+      const resultVal = formatNum(data.result);
+
+      document.getElementById('expression').textContent = expr + ' =';
+      const resultEl = document.getElementById('result');
+      resultEl.textContent = resultVal;
+      resultEl.className = 'result';
+
+      addHistory(expr, resultVal);
+
+    } catch (err) {
+      showError('Network error. Is the server running?');
+    } finally {
+      btn.innerHTML = originalHTML;
+      btn.disabled = false;
+    }
+  }
+
+  function formatNum(n) {
+    return Number.isInteger(n) ? n.toString() : parseFloat(n.toFixed(10)).toString();
+  }
+
+  function showError(msg) {
+    document.getElementById('expression').textContent = '';
+    const el = document.getElementById('result');
+    el.textContent = msg;
+    el.className = 'result error';
+  }
+
+  function clearAll() {
+    document.getElementById('numA').value = '';
+    document.getElementById('numB').value = '';
+    document.getElementById('expression').textContent = '';
+    document.getElementById('result').textContent = '0';
+    document.getElementById('result').className = 'result';
+  }
+
+  function addHistory(expr, result) {
+    history.unshift({ expr, result });
+    if (history.length > 20) history.pop();
+    renderHistory();
+  }
+
+  function renderHistory() {
+    const ul = document.getElementById('history');
+    ul.innerHTML = history.map(h =>
+      `<li><span>${h.expr}</span><span class="h-result">= ${h.result}</span></li>`
+    ).join('');
+  }
+
+  function clearHistory() {
+    history = [];
+    renderHistory();
+  }
+
+  // Allow Enter key to trigger last-used operation
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Enter') calculate('add');
+  });
+</script>
+</body>
+</html>
