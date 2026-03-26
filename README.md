@@ -29,6 +29,16 @@ The server runs at `http://127.0.0.1:5000` by default.
 
 ---
 
+## For test
+
+```bash
+#1.install test package
+pip install pytest
+
+
+#2.then run
+pytest
+
 ## API Reference
 
 All endpoints accept **JSON** bodies and return **JSON** responses.
