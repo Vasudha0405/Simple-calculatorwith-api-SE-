@@ -14,41 +14,41 @@
       justify-content: center;
       background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
       font-family: 'Segoe UI', system-ui, sans-serif;
+      padding: 24px 0;
     }
 
     .card {
-      background: rgba(255, 255, 255, 0.05);
+      background: rgba(255,255,255,0.05);
       backdrop-filter: blur(20px);
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255,255,255,0.1);
       border-radius: 24px;
-      padding: 40px 36px;
-      width: 420px;
-      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+      padding: 36px 32px;
+      width: 460px;
+      box-shadow: 0 25px 50px rgba(0,0,0,0.5);
     }
 
-    .card h1 {
+    h1 {
       text-align: center;
-      font-size: 1.6rem;
+      font-size: 1.55rem;
       font-weight: 700;
       color: #fff;
-      margin-bottom: 6px;
-      letter-spacing: -0.3px;
+      margin-bottom: 4px;
     }
 
-    .card .subtitle {
+    .subtitle {
       text-align: center;
-      font-size: 0.82rem;
-      color: rgba(255,255,255,0.45);
-      margin-bottom: 32px;
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.4);
+      margin-bottom: 28px;
     }
 
     /* ── Display ── */
     .display {
       background: rgba(0,0,0,0.35);
       border-radius: 14px;
-      padding: 18px 20px;
-      margin-bottom: 28px;
-      min-height: 72px;
+      padding: 16px 20px;
+      margin-bottom: 24px;
+      min-height: 70px;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -56,11 +56,10 @@
     }
 
     .display .expression {
-      font-size: 0.85rem;
+      font-size: 0.82rem;
       color: rgba(255,255,255,0.4);
-      min-height: 18px;
+      min-height: 16px;
       margin-bottom: 4px;
-      word-break: break-all;
     }
 
     .display .result {
@@ -72,38 +71,38 @@
       transition: color 0.2s;
     }
 
-    .display .result.error { color: #fc8181; font-size: 1rem; }
+    .display .result.error { color: #fc8181; font-size: 0.95rem; font-weight: 600; }
 
     /* ── Inputs ── */
     .inputs {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 14px;
-      margin-bottom: 22px;
+      gap: 12px;
+      margin-bottom: 20px;
     }
 
     .input-group label {
       display: block;
-      font-size: 0.75rem;
+      font-size: 0.72rem;
       font-weight: 600;
       color: rgba(255,255,255,0.5);
       text-transform: uppercase;
       letter-spacing: 0.8px;
-      margin-bottom: 6px;
+      margin-bottom: 5px;
     }
 
     .input-group input {
       width: 100%;
-      padding: 12px 14px;
+      padding: 11px 12px;
       background: rgba(255,255,255,0.08);
       border: 1px solid rgba(255,255,255,0.12);
       border-radius: 10px;
       color: #fff;
-      font-size: 1.1rem;
+      font-size: 1.05rem;
       font-weight: 600;
       text-align: center;
       outline: none;
-      transition: border-color 0.2s, background 0.2s;
+      transition: border-color 0.2s, background 0.2s, opacity 0.2s;
     }
 
     .input-group input:focus {
@@ -111,98 +110,139 @@
       background: rgba(99,179,237,0.1);
     }
 
-    .input-group input::placeholder { color: rgba(255,255,255,0.25); }
+    .input-group input::placeholder { color: rgba(255,255,255,0.22); }
 
-    /* ── Operation buttons ── */
-    .ops-label {
-      font-size: 0.75rem;
-      font-weight: 600;
-      color: rgba(255,255,255,0.5);
-      text-transform: uppercase;
-      letter-spacing: 0.8px;
-      margin-bottom: 12px;
+    .input-group input:disabled {
+      opacity: 0.28;
+      cursor: not-allowed;
     }
 
+    .input-group .hint {
+      font-size: 0.65rem;
+      color: rgba(255,255,255,0.3);
+      margin-top: 4px;
+      text-align: center;
+      min-height: 12px;
+    }
+
+    /* ── Section label ── */
+    .section-label {
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: rgba(255,255,255,0.38);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 9px;
+      margin-top: 18px;
+    }
+
+    /* ── Op buttons ── */
     .ops {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      gap: 10px;
-      margin-bottom: 20px;
+      gap: 9px;
+      margin-bottom: 4px;
+    }
+
+    .ops-unary {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 9px;
+      margin-bottom: 4px;
     }
 
     .op-btn {
-      padding: 16px 8px;
+      padding: 14px 6px;
       border: none;
       border-radius: 12px;
       cursor: pointer;
-      font-size: 1.3rem;
+      font-size: 1.2rem;
       font-weight: 700;
       color: #fff;
       transition: transform 0.1s, opacity 0.15s, box-shadow 0.15s;
-      position: relative;
     }
 
-    .op-btn span.label {
+    .op-btn .lbl {
       display: block;
-      font-size: 0.65rem;
+      font-size: 0.6rem;
       font-weight: 500;
-      opacity: 0.75;
-      margin-top: 4px;
+      opacity: 0.78;
+      margin-top: 3px;
       letter-spacing: 0.3px;
     }
 
-    .op-btn:hover  { opacity: 0.9; transform: translateY(-2px); box-shadow: 0 6px 16px rgba(0,0,0,0.3); }
-    .op-btn:active { transform: translateY(0); }
+    .op-btn:hover  { opacity: 0.88; transform: translateY(-2px); box-shadow: 0 6px 16px rgba(0,0,0,0.3); }
+    .op-btn:active { transform: translateY(0); box-shadow: none; }
+    .op-btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none; box-shadow: none; }
 
-    .op-btn.add      { background: linear-gradient(135deg, #48bb78, #38a169); }
-    .op-btn.subtract { background: linear-gradient(135deg, #f6ad55, #ed8936); }
-    .op-btn.multiply { background: linear-gradient(135deg, #63b3ed, #4299e1); }
-    .op-btn.divide   { background: linear-gradient(135deg, #fc8181, #e53e3e); }
+    /* colours */
+    .op-btn.add         { background: linear-gradient(135deg, #48bb78, #2f855a); }
+    .op-btn.subtract    { background: linear-gradient(135deg, #f6ad55, #c05621); }
+    .op-btn.multiply    { background: linear-gradient(135deg, #63b3ed, #2b6cb0); }
+    .op-btn.divide      { background: linear-gradient(135deg, #fc8181, #c53030); }
+    .op-btn.modulus     { background: linear-gradient(135deg, #b794f4, #6b46c1); }
+    .op-btn.power       { background: linear-gradient(135deg, #f687b3, #b83280); }
+    .op-btn.floor_div   { background: linear-gradient(135deg, #76e4f7, #0987a0); }
+    .op-btn.percentage  { background: linear-gradient(135deg, #fbd38d, #b7791f); }
+    .op-btn.sqrt        { background: linear-gradient(135deg, #68d391, #276749); }
+    .op-btn.absolute    { background: linear-gradient(135deg, #90cdf4, #2a69ac); }
+
+    /* unary badge */
+    .op-btn .unary-badge {
+      display: inline-block;
+      font-size: 0.5rem;
+      background: rgba(255,255,255,0.25);
+      border-radius: 4px;
+      padding: 1px 4px;
+      margin-left: 4px;
+      vertical-align: middle;
+      letter-spacing: 0.3px;
+    }
 
     /* ── Clear button ── */
     .clear-btn {
       width: 100%;
-      padding: 13px;
-      background: rgba(255,255,255,0.07);
-      border: 1px solid rgba(255,255,255,0.12);
+      margin-top: 16px;
+      padding: 12px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
       border-radius: 12px;
-      color: rgba(255,255,255,0.6);
-      font-size: 0.9rem;
+      color: rgba(255,255,255,0.55);
+      font-size: 0.88rem;
       font-weight: 600;
       cursor: pointer;
-      letter-spacing: 0.5px;
       transition: background 0.2s, color 0.2s;
     }
 
-    .clear-btn:hover { background: rgba(255,255,255,0.13); color: #fff; }
+    .clear-btn:hover { background: rgba(255,255,255,0.12); color: #fff; }
 
     /* ── History ── */
     .history-wrap {
-      margin-top: 24px;
-      border-top: 1px solid rgba(255,255,255,0.08);
-      padding-top: 20px;
+      margin-top: 22px;
+      border-top: 1px solid rgba(255,255,255,0.07);
+      padding-top: 18px;
     }
 
     .history-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 12px;
+      margin-bottom: 10px;
     }
 
     .history-header span {
-      font-size: 0.75rem;
+      font-size: 0.7rem;
       font-weight: 600;
-      color: rgba(255,255,255,0.45);
+      color: rgba(255,255,255,0.4);
       text-transform: uppercase;
-      letter-spacing: 0.8px;
+      letter-spacing: 1px;
     }
 
     .history-header button {
       background: none;
       border: none;
-      color: rgba(255,255,255,0.35);
-      font-size: 0.75rem;
+      color: rgba(255,255,255,0.3);
+      font-size: 0.72rem;
       cursor: pointer;
     }
 
@@ -212,32 +252,33 @@
       list-style: none;
       display: flex;
       flex-direction: column;
-      gap: 6px;
-      max-height: 160px;
+      gap: 5px;
+      max-height: 150px;
       overflow-y: auto;
     }
 
-    .history-list::-webkit-scrollbar { width: 4px; }
+    .history-list::-webkit-scrollbar { width: 3px; }
     .history-list::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 4px; }
 
     .history-list li {
       background: rgba(255,255,255,0.04);
       border-radius: 8px;
-      padding: 8px 12px;
-      font-size: 0.82rem;
-      color: rgba(255,255,255,0.55);
+      padding: 7px 11px;
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.5);
       display: flex;
       justify-content: space-between;
+      gap: 8px;
     }
 
-    .history-list li .h-result { color: #e2e8f0; font-weight: 600; }
+    .history-list li .h-result { color: #e2e8f0; font-weight: 600; flex-shrink: 0; }
 
-    /* ── Loading spinner inside button ── */
+    /* spinner */
     @keyframes spin { to { transform: rotate(360deg); } }
     .spinner {
       display: inline-block;
-      width: 16px; height: 16px;
-      border: 2px solid rgba(255,255,255,0.4);
+      width: 14px; height: 14px;
+      border: 2px solid rgba(255,255,255,0.35);
       border-top-color: #fff;
       border-radius: 50%;
       animation: spin 0.6s linear infinite;
@@ -248,7 +289,7 @@
 <body>
 <div class="card">
   <h1>Calculator</h1>
-  <p class="subtitle">Powered by REST API</p>
+  <p class="subtitle">Powered by REST API &nbsp;·&nbsp; 10 Operations</p>
 
   <!-- Display -->
   <div class="display">
@@ -259,30 +300,40 @@
   <!-- Inputs -->
   <div class="inputs">
     <div class="input-group">
-      <label>First Number (A)</label>
-      <input type="number" id="numA" placeholder="0" />
+      <label>Number A</label>
+      <input type="number" id="numA" placeholder="0" oninput="onInputChange()" />
+      <div class="hint" id="hintA"></div>
     </div>
     <div class="input-group">
-      <label>Second Number (B)</label>
-      <input type="number" id="numB" placeholder="0" />
+      <label>Number B</label>
+      <input type="number" id="numB" placeholder="0" oninput="onInputChange()" />
+      <div class="hint" id="hintB">not used for unary ops</div>
     </div>
   </div>
 
-  <!-- Operation buttons -->
-  <div class="ops-label">Select Operation</div>
+  <!-- Basic operations -->
+  <div class="section-label">Basic</div>
   <div class="ops">
-    <button class="op-btn add"      onclick="calculate('add')">
-      ＋<span class="label">Add</span>
-    </button>
-    <button class="op-btn subtract" onclick="calculate('subtract')">
-      －<span class="label">Subtract</span>
-    </button>
-    <button class="op-btn multiply" onclick="calculate('multiply')">
-      ×<span class="label">Multiply</span>
-    </button>
-    <button class="op-btn divide"   onclick="calculate('divide')">
-      ÷<span class="label">Divide</span>
-    </button>
+    <button class="op-btn add"      onclick="calculate('add',      false)">＋<span class="lbl">Add</span></button>
+    <button class="op-btn subtract" onclick="calculate('subtract', false)">－<span class="lbl">Subtract</span></button>
+    <button class="op-btn multiply" onclick="calculate('multiply', false)">×<span class="lbl">Multiply</span></button>
+    <button class="op-btn divide"   onclick="calculate('divide',   false)">÷<span class="lbl">Divide</span></button>
+  </div>
+
+  <!-- Extended binary operations -->
+  <div class="section-label">Extended</div>
+  <div class="ops">
+    <button class="op-btn modulus"    onclick="calculate('modulus',    false)">mod<span class="lbl">Modulus</span></button>
+    <button class="op-btn power"      onclick="calculate('power',      false)">xⁿ<span class="lbl">Power</span></button>
+    <button class="op-btn floor_div"  onclick="calculate('floor_divide', false)">⌊÷⌋<span class="lbl">Floor Div</span></button>
+    <button class="op-btn percentage" onclick="calculate('percentage', false)">%<span class="lbl">A% of B</span></button>
+  </div>
+
+  <!-- Unary operations -->
+  <div class="section-label">Unary <span style="font-weight:400;opacity:.6">(uses A only)</span></div>
+  <div class="ops-unary">
+    <button class="op-btn sqrt"     onclick="calculate('sqrt',     true)">√<span class="lbl">Square Root <span class="unary-badge">A only</span></span></button>
+    <button class="op-btn absolute" onclick="calculate('absolute', true)">|x|<span class="lbl">Absolute Value <span class="unary-badge">A only</span></span></button>
   </div>
 
   <button class="clear-btn" onclick="clearAll()">Clear</button>
@@ -298,58 +349,79 @@
 </div>
 
 <script>
-  const SYMBOLS = { add: '+', subtract: '−', multiply: '×', divide: '÷' };
-  const ENDPOINTS = { add: '/add', subtract: '/subtract', multiply: '/multiply', divide: '/divide' };
-  let history = [];
+  // Maps operation key → { symbol, endpoint }
+  const OPS = {
+    add:          { sym: '+',    url: '/add' },
+    subtract:     { sym: '−',   url: '/subtract' },
+    multiply:     { sym: '×',   url: '/multiply' },
+    divide:       { sym: '÷',   url: '/divide' },
+    modulus:      { sym: 'mod', url: '/modulus' },
+    power:        { sym: '^',   url: '/power' },
+    floor_divide: { sym: '//',  url: '/floor_divide' },
+    percentage:   { sym: '% of',url: '/percentage' },
+    sqrt:         { sym: '√',   url: '/sqrt' },
+    absolute:     { sym: '|a|', url: '/absolute' },
+  };
 
-  async function calculate(operation) {
+  let calcHistory = [];
+
+  function onInputChange() {
+    // nothing live – keeps UI snappy
+  }
+
+  async function calculate(operation, isUnary) {
     const aVal = document.getElementById('numA').value.trim();
     const bVal = document.getElementById('numB').value.trim();
 
-    if (aVal === '' || bVal === '') {
-      showError('Please enter both numbers.');
-      return;
-    }
+    if (aVal === '') { showError('Please enter Number A.'); return; }
+    if (!isUnary && bVal === '') { showError('Please enter Number B.'); return; }
 
-    const btn = document.querySelector(`.op-btn.${operation}`);
-    const originalHTML = btn.innerHTML;
-    btn.innerHTML = '<span class="spinner"></span>';
-    btn.disabled = true;
+    // Find button by class
+    const btn = document.querySelector(`.op-btn.${operation.replace('_', '_')}`);
+    const originalHTML = btn ? btn.innerHTML : '';
+    if (btn) { btn.innerHTML = '<span class="spinner"></span>'; btn.disabled = true; }
+
+    const body = isUnary
+      ? { a: parseFloat(aVal) }
+      : { a: parseFloat(aVal), b: parseFloat(bVal) };
 
     try {
-      const res = await fetch(ENDPOINTS[operation], {
-        method: 'POST',
+      const res  = await fetch(OPS[operation].url, {
+        method:  'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ a: parseFloat(aVal), b: parseFloat(bVal) })
+        body:    JSON.stringify(body),
       });
-
       const data = await res.json();
 
-      if (!res.ok) {
-        showError(data.error || 'Something went wrong.');
-        return;
+      if (!res.ok) { showError(data.error || 'Something went wrong.'); return; }
+
+      const sym = OPS[operation].sym;
+      let expr;
+      if (isUnary) {
+        expr = `${sym}(${fmt(data.a)})`;
+      } else {
+        expr = `${fmt(data.a)} ${sym} ${fmt(data.b)}`;
       }
 
-      const expr = `${formatNum(data.a)} ${SYMBOLS[operation]} ${formatNum(data.b)}`;
-      const resultVal = formatNum(data.result);
-
+      const resultVal = fmt(data.result);
       document.getElementById('expression').textContent = expr + ' =';
-      const resultEl = document.getElementById('result');
-      resultEl.textContent = resultVal;
-      resultEl.className = 'result';
+      const el = document.getElementById('result');
+      el.textContent = resultVal;
+      el.className = 'result';
 
-      addHistory(expr, resultVal);
+      pushHistory(expr, resultVal);
 
-    } catch (err) {
+    } catch {
       showError('Network error. Is the server running?');
     } finally {
-      btn.innerHTML = originalHTML;
-      btn.disabled = false;
+      if (btn) { btn.innerHTML = originalHTML; btn.disabled = false; }
     }
   }
 
-  function formatNum(n) {
-    return Number.isInteger(n) ? n.toString() : parseFloat(n.toFixed(10)).toString();
+  function fmt(n) {
+    if (n === undefined || n === null) return '—';
+    if (Number.isInteger(n)) return n.toString();
+    return parseFloat(n.toFixed(10)).toString();
   }
 
   function showError(msg) {
@@ -367,28 +439,22 @@
     document.getElementById('result').className = 'result';
   }
 
-  function addHistory(expr, result) {
-    history.unshift({ expr, result });
-    if (history.length > 20) history.pop();
+  function pushHistory(expr, result) {
+    calcHistory.unshift({ expr, result });
+    if (calcHistory.length > 25) calcHistory.pop();
     renderHistory();
   }
 
   function renderHistory() {
-    const ul = document.getElementById('history');
-    ul.innerHTML = history.map(h =>
-      `<li><span>${h.expr}</span><span class="h-result">= ${h.result}</span></li>`
-    ).join('');
+    document.getElementById('history').innerHTML = calcHistory
+      .map(h => `<li><span>${h.expr}</span><span class="h-result">= ${h.result}</span></li>`)
+      .join('');
   }
 
   function clearHistory() {
-    history = [];
+    calcHistory = [];
     renderHistory();
   }
-
-  // Allow Enter key to trigger last-used operation
-  document.addEventListener('keydown', e => {
-    if (e.key === 'Enter') calculate('add');
-  });
 </script>
 </body>
 </html>
